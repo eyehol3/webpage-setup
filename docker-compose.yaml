@@ -2,7 +2,7 @@ services:
   main:
     image: eyehol3/webpage-setup
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      # - /var/run/docker.sock:/var/run/docker.sock
       - ./serve:/serve
   nginx:
     image: nginx
