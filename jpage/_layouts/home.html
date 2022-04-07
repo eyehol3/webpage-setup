@@ -1,0 +1,34 @@
+---
+layout: default
+<!-- pagination: 
+  enabled: false
+  category: journal, quality_content -->
+---
+
+{{ content }}
+{% assign contentwonl = content | strip_newlines %} {% unless contentwonl == ""  %} <br /> {% endunless %} <!-- add line break if there is any content -->
+
+{% assign show_posts = 10 %}
+
+<h2> quality_content <sup>trademark</sup><br></h2>
+  <ul>
+    {% for post in site.categories.content limit: show_posts %}
+    <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="/questionable_content/"> show all </a>
+
+
+  <h2>journal and notes<br></h2>
+  <ul>
+    {% for post in site.categories.journal limit: show_posts %}
+    <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="/journal/"> show all </a>
