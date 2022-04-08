@@ -1,16 +1,36 @@
 services:
   main:
+    container_name: main
     image: eyehol3/webpage-setup
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
-      - ./serve:/serve
+      - /var/run/docker.sock:/var/run/docker.sock
+      - serve:/serve
+      - source:/source
+    environment:
+      - SOURCE_DIR=/source
+      - SERVE_DIR=/serve
   nginx:
+    container_name: server
     image: nginx
     volumes:
-      - ./serve:/usr/share/nginx/html
+      - serve:/usr/share/nginx/html
+      - ./jekyll.nginxconf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "8080:80"
     depends_on:
       - main
 
+volumes:
+  serve:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./serve
+  source:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./jpage
       

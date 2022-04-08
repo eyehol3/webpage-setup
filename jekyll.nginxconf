@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    server_name www.localhost;
+    return 301 $scheme://localhost$request_uri;
+}
+
+server {
+    listen 80;
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    server_name localhost;
+    #access_log  /var/log/nginx/host.access.log  main;
+    
+    if (!-f "${request_filename}index.html") {
+        rewrite ^/(.*)/$ /$1 permanent;
+    }
+
+    if ($request_uri ~* "/index.html") {
+        rewrite (?i)^(.*)index\.html$ $1 permanent;
+    }   
+
+    if ($request_uri ~* ".html") {
+        rewrite (?i)^(.*)/(.*)\.html $1/$2 permanent;
+    }
+
+    location / {
+        try_files $uri.html $uri $uri/ /index.html;
+    }
+}

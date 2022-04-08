@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
+cd "$SOURCE_DIR" || exit
 
 docker run --rm \
-  --volume="$PWD:/srv/jekyll:Z" \
+  --volumes-from=main \
   jekyll/builder:"$JEKYLL_VERSION" \
-  jekyll build -s "$SOURCE_DIR" -d "$SERVE_DIR"
+  jekyll build -s /source -d /serve

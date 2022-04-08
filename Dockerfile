@@ -7,10 +7,7 @@ RUN apt update && apt install -y \
     # zlib1g-dev \
     git
 
-ENV SOURCE jpage
 ENV JEKYLL_VERSION 3.8
-ENV SOURCE_DIR /jpage
-ENV SERVE_DIR /serve
 
 # RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
     # echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
