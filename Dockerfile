@@ -7,12 +7,6 @@ RUN apt update && apt install -y \
     # zlib1g-dev \
     git
 
-ENV JEKYLL_VERSION 3.8
-
-# RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc && \
-    # echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
-# RUN gem install jekyll bundler
-
 RUN apt-get install -y \
     ca-certificates \
     curl \
@@ -28,8 +22,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt install -y docker-ce do
 RUN curl -sS https://webinstall.dev/watchexec | bash && \
     export PATH="/root/.local/bin:$PATH" && \
     apt install -y daemon
-# RUN cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-RUN mkdir /serve
+
+# RUN cd ~ && curl -s "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+
+RUN ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 
 COPY . .
 

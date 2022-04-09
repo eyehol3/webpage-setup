@@ -1,15 +1,23 @@
 server {
     listen 80;
-    server_name www.localhost;
-    return 301 $scheme://localhost$request_uri;
-}
+    listen 443 ssl;
+    
+    server_name eyeholle.com www.eyeholle.com;
 
-server {
-    listen 80;
+    ssl_certificate /etc/letsencrypt/live/eyeholle.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/eyeholle.com/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    #ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    if ($server_port = 80) { set $https_redirect 1; }
+    if ($host ~ '^www\.') { set $https_redirect 1; }
+    if ($https_redirect = 1) { return 301 https://eyeholle.com$request_uri; }
+
+    location /.well-known/acme-challenge/ { root /var/www/certbot; }
 
     root /usr/share/nginx/html;
     index index.html index.htm;
-    server_name localhost;
     #access_log  /var/log/nginx/host.access.log  main;
     
     if (!-f "${request_filename}index.html") {
